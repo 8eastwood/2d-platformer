@@ -38,16 +38,10 @@ public class Enemy : MonoBehaviour
             _rigidbody.velocity = new Vector2(_speed * directionChanger, 0);
         }
 
-        if (Vector2.Distance(transform.position, _currentWaypointToGo.position) < _distanceToWaypoint && _currentWaypointToGo == _pointB.transform) 
+        if ((transform.position - _currentWaypointToGo.position).sqrMagnitude < _distanceToWaypoint * _distanceToWaypoint)
         {
             FlipSide();
-            _currentWaypointToGo = _pointA.transform;
-        }
-
-        if (Vector2.Distance(transform.position, _currentWaypointToGo.position) < _distanceToWaypoint && _currentWaypointToGo == _pointA.transform)
-        {
-            FlipSide();
-            _currentWaypointToGo = _pointB.transform;
+            _currentWaypointToGo = _currentWaypointToGo == _pointB.transform ? _pointA.transform : _pointB.transform;
         }
     }
 
