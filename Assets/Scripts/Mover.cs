@@ -1,32 +1,30 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Mover : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _speed = 4f;
 
+    private const string Horizontal = "Horizontal";
+
+    public readonly int Speed = Animator.StringToHash(nameof(Speed));
+    public readonly int IsJumping = Animator.StringToHash(nameof(IsJumping));
     public Animator Animator;
     private float _horizontalMove;
     private float _jumpingPower = 8f;
     private bool _isFacingCorrect = true;
+    private bool _isJump;
 
-    void Update()
+    private void Update()
     {
-        _horizontalMove = Input.GetAxisRaw("Horizontal");
-        Animator.SetFloat("Speed", Mathf.Abs(_horizontalMove));
+        _horizontalMove = Input.GetAxisRaw(Horizontal);
+        Animator.SetFloat(Speed, Mathf.Abs(_horizontalMove));
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpingPower);
-            Animator.SetBool("IsJumping", true);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space) && _rigidBody.velocity.y > 0f)
-        {
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y * 0.5f);
-            Animator.SetBool("IsJumping", false);
+            _isJump = true;
         }
 
         FlipSide();
@@ -35,6 +33,19 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         _rigidBody.velocity = new Vector2(_horizontalMove * _speed, _rigidBody.velocity.y);
+
+        if (_isJump)
+        {
+            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpingPower);
+            Animator.SetBool(IsJumping, true);
+            Debug.Log("animation works here");
+            _isJump = false;
+        }
+
+        if (_isJump == false)
+        {
+            Animator.SetBool(IsJumping, false);
+        }
     }
 
     private bool IsGrounded()
