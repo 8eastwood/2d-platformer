@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class CollisionHandler : MonoBehaviour
+public class ItemCollector : MonoBehaviour
 {
+    [SerializeField] private Player _player;
+
     private Wallet _wallet;
 
     private void Awake()
@@ -15,6 +17,12 @@ public class CollisionHandler : MonoBehaviour
         {
             _wallet.AddCoin();
             coin.DestroyAfterCapture();
+        }
+
+        if (other.gameObject.TryGetComponent(out HealEssense healEssense))
+        {
+            _player.Heal();
+            healEssense.DestroyAfterCapture();
         }
     }
 }
