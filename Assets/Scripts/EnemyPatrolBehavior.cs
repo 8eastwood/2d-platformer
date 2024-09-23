@@ -12,6 +12,12 @@ public class EnemyPatrolBehavior : MonoBehaviour
     private Transform _playerPosition;
     private Rigidbody2D _rigidbody;
 
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _currentWaypointToGo = _pointA.transform;
+    }
+
     private void FixedUpdate()
     {
         if (_isPlayerNear)
@@ -22,12 +28,6 @@ public class EnemyPatrolBehavior : MonoBehaviour
         {
             Patrol();
         }
-    }
-
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _currentWaypointToGo = _pointA.transform;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

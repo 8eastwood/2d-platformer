@@ -8,22 +8,6 @@ public class PlayerCombat : MonoBehaviour
     private float _attackRange = 1f;
     private bool _isAttack;
 
-    //public void Attack()
-    //{
-    //    Collider2D[] _hittedEnemies = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayers);
-
-    //    foreach (Collider2D enemy in _hittedEnemies)
-    //    {
-    //        Debug.Log("Hit enemy " + enemy.name);
-    //        enemy.GetComponent<Enemy>().TakeDamage(_attackDamage);
-    //    }
-    //}
-
-    //private void Update()
-    //{
-    //    _isAttack = Input.GetKeyDown(KeyCode.E);
-    //}
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemy) && Input.GetKeyDown(KeyCode.E))
