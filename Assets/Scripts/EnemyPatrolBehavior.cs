@@ -30,18 +30,19 @@ public class EnemyPatrolBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void PlayerNear()
     {
-        if (other.gameObject.TryGetComponent(out Player player))
-        {
-            _isPlayerNear = true;
-            _playerPosition = player.transform;
-        }
+        _isPlayerNear = true;
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void PlayerFar()
     {
         _isPlayerNear = false;
+    }
+
+    public void GetPlayerPosition(Transform playerPosition)
+    {
+        _playerPosition = playerPosition;
     }
 
     private void Chase()

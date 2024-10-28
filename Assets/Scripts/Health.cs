@@ -13,20 +13,18 @@ public class Health : MonoBehaviour
 
     public void TakeHeal()
     {
-        Debug.Log(_currentHealth + "before heal");
         int HealthAmountToHeal = 50;
         _currentHealth += HealthAmountToHeal;
-        Debug.Log(_currentHealth + "after heal");
     }
 
-    public void TakeDamage(int damage, string name)
+    public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
 
         if (_currentHealth < 0)
         {
             _currentHealth = 0;
-            Die(name);
+            Die();
         }
     }
 
@@ -35,10 +33,9 @@ public class Health : MonoBehaviour
         return _currentHealth;
     }
 
-    private void Die(string name)
+    private void Die()
     {
-        Debug.Log(name + " died!");
-        this.enabled = false;
+        enabled = false;
         Destroy(gameObject);
     }
 }

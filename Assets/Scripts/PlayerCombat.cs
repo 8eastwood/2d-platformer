@@ -13,24 +13,11 @@ public class PlayerCombat : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Enemy enemy) && Input.GetKeyDown(KeyCode.E))
         {
             Attack(enemy);
-            Debug.Log("Player hit enemy");
         }
     }
 
     public void Attack(Enemy enemy)
     {
         enemy.TakeDamage(_attackDamage);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (_attackPoint == null)
-        {
-            return;
-        }
-        else
-        {
-            Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
-        }
     }
 }

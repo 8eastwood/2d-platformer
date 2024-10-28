@@ -12,7 +12,6 @@ public class EnemyCombat : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent(out Player player) && _isAttackEnabled)
         {
-            Debug.Log("Enemy hit player");
             Attack(player);
         }
     }
@@ -20,17 +19,5 @@ public class EnemyCombat : MonoBehaviour
     private void Attack(Player player)
     {
         player.TakeDamage(_enemyAttackDamage);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (_enemyAttackPoint == null)
-        {
-            return;
-        }
-        else
-        {
-            Gizmos.DrawWireSphere(_enemyAttackPoint.position, _attackRange);
-        }
     }
 }

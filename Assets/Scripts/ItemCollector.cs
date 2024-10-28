@@ -13,13 +13,13 @@ public class ItemCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent(out Coin coin))
+        if (other.gameObject.TryGetComponent(out CollectibleItem item))
         {
             _wallet.AddCoin();
-            coin.DestroyAfterCapture();
+            item.DestroyAfterCapture();
         }
 
-        if (other.gameObject.TryGetComponent(out HealEssense healEssense))
+        if (other.gameObject.TryGetComponent(out CollectibleItem healEssense))
         {
             _player.Heal();
             healEssense.DestroyAfterCapture();

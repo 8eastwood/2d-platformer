@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public readonly int isRunning = Animator.StringToHash(nameof(isRunning));
-    public Animator Animator;
+    [SerializeField] private Animator Animator;
+
+    private readonly int isRunning = Animator.StringToHash(nameof(isRunning));
     private Health _health;
-    private string _name = "Enemy";
-
-    public Enemy()
-    {
-        Name = _name;
-    }
-
-    public string Name { get; private set; }
+    private int _damageToTake;
 
     private void Awake()
     {
@@ -22,12 +16,6 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _health.TakeDamage(damage, Name);
-        Debug.Log("enemy got hit and have " + _health.ShowHealth() + "HP ");
-    }
-
-    public void Heal()
-    {
-        _health.TakeHeal();
+        _health.TakeDamage(damage);
     }
 }

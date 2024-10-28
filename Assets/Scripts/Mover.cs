@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
+    private const string Horizontal = "Horizontal";
+
     [SerializeField] private Rigidbody2D _rigidBody;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _speed = 4f;
-
-    private const string Horizontal = "Horizontal";
 
     public readonly int Speed = Animator.StringToHash(nameof(Speed));
     public readonly int IsJumping = Animator.StringToHash(nameof(IsJumping));
@@ -16,19 +16,7 @@ public class Mover : MonoBehaviour
     private float _jumpingPower = 8f;
     private bool _isFacingCorrect = true;
     private bool _isJump;
-
-    private void Update()
-    {
-        _horizontalMove = Input.GetAxisRaw(Horizontal);
-        Animator.SetFloat(Speed, Mathf.Abs(_horizontalMove));
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
-        {
-            _isJump = true;
-        }
-
-        FlipSide();
-    }
+    private KeyCode _jumpKey = KeyCode.Space;
 
     private void FixedUpdate()
     {
@@ -38,7 +26,6 @@ public class Mover : MonoBehaviour
         {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpingPower);
             Animator.SetBool(IsJumping, true);
-            Debug.Log("animation works here");
             _isJump = false;
         }
 
@@ -46,6 +33,19 @@ public class Mover : MonoBehaviour
         {
             Animator.SetBool(IsJumping, false);
         }
+    }
+
+    private void Update()
+    {
+        _horizontalMove = Input.GetAxisRaw(Horizontal);
+        Animator.SetFloat(Speed, Mathf.Abs(_horizontalMove));
+
+        if (Input.GetKeyDown(_jumpKey) && IsGrounded())
+        {
+            _isJump = true;
+        }
+
+        FlipSide();
     }
 
     private bool IsGrounded()
