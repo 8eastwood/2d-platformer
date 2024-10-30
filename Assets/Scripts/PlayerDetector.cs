@@ -4,20 +4,21 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerDetector : MonoBehaviour
 {
+    [SerializeField] private EnemyPatrolBehavior _enemyBehavior;
+
     private Transform _playerPosition;
-    private EnemyPatrolBehavior _enemyBehavior;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.TryGetComponent(out Player player))
         {
-            _enemyBehavior.PlayerNear();
-            _enemyBehavior.GetPlayerPosition(player.transform);
+            _enemyBehavior.DetectPlayerNear();
+            _enemyBehavior.TransferPlayerPosition(player.transform);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        _enemyBehavior.PlayerNear();
+        _enemyBehavior.DetectPlayerNear();
     }
 }

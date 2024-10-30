@@ -30,17 +30,17 @@ public class EnemyPatrolBehavior : MonoBehaviour
         }
     }
 
-    public void PlayerNear()
+    public void DetectPlayerNear()
     {
         _isPlayerNear = true;
     }
 
-    public void PlayerFar()
+    public void DetectPlayerLeft()
     {
         _isPlayerNear = false;
     }
 
-    public void GetPlayerPosition(Transform playerPosition)
+    public void TransferPlayerPosition(Transform playerPosition)
     {
         _playerPosition = playerPosition;
     }

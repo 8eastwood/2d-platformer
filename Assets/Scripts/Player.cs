@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent (typeof(Health))]
 
 public class Player : MonoBehaviour
 {
@@ -14,9 +15,9 @@ public class Player : MonoBehaviour
         _health = GetComponent<Health>();
     }
 
-    public void Heal()
+    public void Heal(int healPoints)
     {
-        _health.TakeHeal();
+        _health.TakeHeal(healPoints);
     }
 
     public void TakeDamage(int damage)
