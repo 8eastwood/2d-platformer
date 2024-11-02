@@ -5,8 +5,8 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
 
     private int _attackDamage = 20;
-    private float _attackRange = 1f;
-    private bool _isAttack;
+    //private float _attackRange = 1f;
+    //private bool _isAttack;
 
     private void OnTriggerStay2D(Collider2D collision)
     {

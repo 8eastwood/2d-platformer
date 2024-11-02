@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private bool _isAttack;
+    //private bool _isAttack;
     private Health _health;
 
     private void Awake()

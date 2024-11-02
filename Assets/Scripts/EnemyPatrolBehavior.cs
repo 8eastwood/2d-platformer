@@ -1,16 +1,19 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyPatrolBehavior : MonoBehaviour
 {
     [SerializeField] private Waypoint _pointA;
     [SerializeField] private Waypoint _pointB;
     [SerializeField] private float _speed = 1f;
+    [SerializeField] private PlayerDetector _playerDetector;
 
-    private bool _isPlayerNear = false;
     private float _distanceToWaypoint = 0.5f;
     private Transform _currentWaypointToGo;
     private Transform _playerPosition;
     private Rigidbody2D _rigidbody;
+
+    public bool IsPlayerNear { get; private set; } = false;
 
     private void Awake()
     {
@@ -20,8 +23,9 @@ public class EnemyPatrolBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isPlayerNear)
+        if (IsPlayerNear)
         {
+            _playerPosition.transform.position = _playerDetector._playerPosition;
             Chase();
         }
         else
@@ -30,27 +34,12 @@ public class EnemyPatrolBehavior : MonoBehaviour
         }
     }
 
-    public void DetectPlayerNear()
-    {
-        _isPlayerNear = true;
-    }
-
-    public void DetectPlayerLeft()
-    {
-        _isPlayerNear = false;
-    }
-
-    public void TransferPlayerPosition(Transform playerPosition)
-    {
-        _playerPosition = playerPosition;
-    }
-
     private void Chase()
     {
         float directionChanger = -1f;
-        Vector2 point = _playerPosition.position - transform.position;
+        Vector2 point = _playerPosition.transform.position - transform.position;
 
-        if (_playerPosition.position.x > transform.position.x)
+        if (_playerPosition.transform.position.x > transform.position.x)
         {
             _rigidbody.velocity = new Vector2(_speed, 0);
             transform.localScale = new Vector3(-1f, 1f, 1f);
