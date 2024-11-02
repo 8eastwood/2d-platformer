@@ -12,8 +12,7 @@ public class EnemyPatrolBehavior : MonoBehaviour
     private Transform _currentWaypointToGo;
     private Transform _playerPosition;
     private Rigidbody2D _rigidbody;
-
-    public bool IsPlayerNear { get; private set; } = false;
+    private bool _isPlayerNear = false;
 
     private void Awake()
     {
@@ -23,9 +22,11 @@ public class EnemyPatrolBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsPlayerNear)
+        _isPlayerNear = _playerDetector.IsPlayerNear;
+
+        if (_isPlayerNear)
         {
-            _playerPosition.transform.position = _playerDetector._playerPosition;
+            _playerPosition.transform.position = _playerDetector._playerPosition.transform.position;
             Chase();
         }
         else

@@ -5,23 +5,27 @@ using UnityEngine;
 public class PlayerDetector : MonoBehaviour
 {
     [SerializeField] private Player _player;
-    [SerializeField] private EnemyPatrolBehavior _enemyBehavior;
-    public bool _isPlayerNear { get; private set; } = false;
-    public Vector3 _playerPosition { get; private set; }
 
-    private Vector3 TransferPlayerPosition(Vector3 playerPosition)
+    public bool IsPlayerNear { get; private set; } = false;
+    public Transform _playerPosition { get; private set; }
+
+    private Transform TransferPlayerPosition(Transform playerPosition)
     {
         return playerPosition;
     }
 
-    private bool DetectPlayerNear(bool isPlayerNear)
+    private bool DetectPlayerNear()
     {
-        return true;
+        IsPlayerNear = true;
+
+        return IsPlayerNear;
     }
 
-    private bool DetectPlayerLeft(bool isPlayerNear)
+    private bool DetectPlayerLeft()
     {
-        return false;
+        IsPlayerNear = false;
+
+        return IsPlayerNear;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -29,13 +33,13 @@ public class PlayerDetector : MonoBehaviour
         if (other.gameObject.TryGetComponent(out Player player))
         {
             Debug.Log("игрок в поле зрения");
-            DetectPlayerNear(_enemyBehavior.IsPlayerNear);
-            _playerPosition = TransferPlayerPosition(_player.transform.position);
+            DetectPlayerNear();
+            _playerPosition = TransferPlayerPosition(_player.transform);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        DetectPlayerLeft(_enemyBehavior.IsPlayerNear);
+        DetectPlayerLeft();
     }
 }
